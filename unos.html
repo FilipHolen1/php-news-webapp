@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Unos vijesti</title>
+    
+</head>
+<body>
+    <header>
+        <a href="index.php"><div class="logo">BRZE VIJESTI</div></a>
+        <nav>
+            <ul>
+                <li><a href="index.php">Naslovna</a></li>
+                <li><a href="kategorija.php?id=sport">Sport</a></li>
+                <li><a href="kategorija.php?id=kultura">Kultura</a></li>
+                <li><a href="administracija.php">Administracija</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Unos vijesti</h1>
+        <form name="unosVijesti" method="POST" action="skripta.php" onsubmit="return validateForm()">
+            <label for="naslov">Naslov vijesti:</label>
+            <input type="text" id="naslov" name="naslov"><br>
+            <span id="error-naslov" class="error-message"></span><br><br>
+            
+            <label for="sazetak">Kratki sadržaj vijesti:</label>
+            <textarea id="sazetak" name="sazetak" rows="4"></textarea><br>
+            <span id="error-sazetak" class="error-message"></span><br><br>
+            
+            <label for="tekst">Tekst vijesti:</label>
+            <textarea id="tekst" name="tekst" rows="10"></textarea><br>
+            <span id="error-tekst" class="error-message"></span><br><br>
+            
+            <label for="kategorija">Kategorija vijesti:</label>
+            <select id="kategorija" name="kategorija">
+                <option value="">Odaberi kategoriju</option>
+                <option value="sport">Sport</option>
+                <option value="kultura">Kultura</option>
+            </select><br>
+            <span id="error-kategorija" class="error-message"></span><br><br>
+            
+            <label for="slika">Odabir slike:</label>
+            <input type="file" id="slika" name="slika" accept="image/png, image/jpeg, image/jpg"><br>
+            <span id="error-slika" class="error-message"></span><br><br>
+            
+            <label for="arhiva">Arhiviraj:</label>
+            <input type="checkbox" id="arhiva" name="arhiva" value="da"><br><br>
+            
+            <input type="submit" value="Pošalji">
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2024 Filip Holen | fholen@tvz.hr</p>
+    </footer>
+
+    <script>
+        function validateForm() {
+            var naslov = document.forms["unosVijesti"]["naslov"].value.trim();
+            var sazetak = document.forms["unosVijesti"]["sazetak"].value.trim();
+            var tekst = document.forms["unosVijesti"]["tekst"].value.trim();
+            var kategorija = document.forms["unosVijesti"]["kategorija"].value;
+            var slika = document.forms["unosVijesti"]["slika"].value;
+
+            var isValid = true;
+
+            if (naslov.length < 5 || naslov.length > 30) {
+                document.getElementById("naslov").classList.add("error");
+                document.getElementById("error-naslov").innerText = "Naslov vijesti mora imati između 5 i 30 znakova.";
+                isValid = false;
+            } else {
+                document.getElementById("naslov").classList.remove("error");
+                document.getElementById("error-naslov").innerText = "";
+            }
+
+            if (sazetak.length < 10 || sazetak.length > 100) {
+                document.getElementById("sazetak").classList.add("error");
+                document.getElementById("error-sazetak").innerText = "Kratki sadržaj vijesti mora imati između 10 i 100 znakova.";
+                isValid = false;
+            } else {
+                document.getElementById("sazetak").classList.remove("error");
+                document.getElementById("error-sazetak").innerText = "";
+            }
+
+            if (tekst === "") {
+                document.getElementById("tekst").classList.add("error");
+                document.getElementById("error-tekst").innerText = "Tekst vijesti ne smije biti prazan.";
+                isValid = false;
+            } else {
+                document.getElementById("tekst").classList.remove("error");
+                document.getElementById("error-tekst").innerText = "";
+            }
+
+            if (kategorija === "") {
+                document.getElementById("kategorija").classList.add("error");
+                document.getElementById("error-kategorija").innerText = "Molimo odaberite kategoriju vijesti.";
+                isValid = false;
+            } else {
+                document.getElementById("kategorija").classList.remove("error");
+                document.getElementById("error-kategorija").innerText = "";
+            }
+
+            if (slika === "") {
+                document.getElementById("error-slika").innerText = "Molimo odaberite sliku za vijest.";
+                isValid = false;
+            } else {
+                document.getElementById("error-slika").innerText = "";
+            }
+
+            return isValid;
+        }
+    </script>
+</body>
+</html>
